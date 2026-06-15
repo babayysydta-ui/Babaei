@@ -158,7 +158,298 @@ filter:brightness(1.15);
 
 
 
-  
+
+
+
+/* =====================
+   BABAEI INDUSTRIAL PRO
+===================== */
+
+
+html{
+scroll-behavior:smooth;
+}
+
+
+body{
+background:
+radial-gradient(circle at 20% 20%,#0a5cff33,transparent 30%),
+radial-gradient(circle at 80% 80%,#ffd70022,transparent 30%),
+#050505;
+}
+
+
+
+/* نور متحرک */
+body:before{
+
+animation:
+moveGlow 8s infinite alternate;
+
+}
+
+
+@keyframes moveGlow{
+
+0%{
+transform:translate(0,0);
+}
+
+100%{
+transform:translate(80px,50px);
+}
+
+}
+
+
+
+
+header{
+
+border-bottom:
+1px solid rgba(255,215,0,.2);
+
+}
+
+
+.logo{
+
+text-shadow:
+0 0 20px #ffd700;
+
+}
+
+
+
+/* منو */
+
+nav a{
+
+position:relative;
+padding:8px 15px;
+border-radius:20px;
+transition:.3s;
+
+}
+
+
+nav a:hover{
+
+background:#ffd700;
+color:#000;
+
+box-shadow:
+0 0 25px #ffd700;
+
+}
+
+
+
+
+
+/* هیرو */
+
+.hero{
+
+position:relative;
+overflow:hidden;
+
+}
+
+
+.hero:after{
+
+content:"";
+position:absolute;
+width:500px;
+height:500px;
+border-radius:50%;
+background:#ffd70022;
+filter:blur(100px);
+animation:pulse 5s infinite;
+
+}
+
+
+
+@keyframes pulse{
+
+50%{
+transform:scale(1.4);
+}
+
+}
+
+
+
+
+.hero h1{
+
+text-shadow:
+0 0 30px #ffd700;
+
+}
+
+
+
+
+
+/* دکمه حرفه ای */
+
+
+.btn{
+
+backdrop-filter:blur(10px);
+
+}
+
+
+.gold{
+
+box-shadow:
+0 0 20px #ffd70088;
+
+}
+
+
+.outline:hover{
+
+background:#ffd700;
+color:#000;
+
+}
+
+
+
+
+/* کارت های سه بعدی */
+
+
+.card,
+.stat,
+.contact{
+
+position:relative;
+overflow:hidden;
+
+}
+
+
+.card:before,
+.stat:before{
+
+content:"";
+position:absolute;
+inset:-2px;
+background:
+linear-gradient(45deg,#ffd700,#0a5cff,transparent);
+z-index:-1;
+
+opacity:0;
+transition:.4s;
+
+}
+
+
+.card:hover:before,
+.stat:hover:before{
+
+opacity:1;
+
+}
+
+
+
+.card:hover{
+
+transform:
+translateY(-15px)
+rotateX(5deg);
+
+}
+
+
+
+
+/* گالری */
+
+.gallery img{
+
+filter:saturate(.8);
+transition:.5s;
+
+}
+
+
+.gallery img:hover{
+
+transform:
+scale(1.08)
+rotate(2deg);
+
+filter:
+saturate(1.4);
+
+box-shadow:
+0 0 40px #ffd70055;
+
+}
+
+
+
+
+
+/* شماره ها */
+
+.num{
+
+text-shadow:
+0 0 25px #ffd700;
+
+}
+
+
+
+
+
+/* دکمه شناور */
+
+.float{
+
+box-shadow:
+0 0 25px #0a5cff;
+
+}
+
+
+
+
+
+/* موبایل */
+
+@media(max-width:768px){
+
+header{
+
+padding:15px;
+
+}
+
+.logo{
+
+font-size:20px;
+
+}
+
+.hero{
+
+min-height:90vh;
+
+}
+
+
+}
+
 </style>
 </head>
 <body>
@@ -386,6 +677,67 @@ counter();
 
 
 
+
+<script>
+
+
+// افکت ورود
+
+const reveal=document.querySelectorAll(
+".card,.stat,.gallery img,.contact,.title"
+);
+
+
+reveal.forEach(x=>{
+x.style.opacity="0";
+x.style.transform="translateY(50px)";
+x.style.transition=".8s";
+});
+
+
+function show(){
+
+reveal.forEach(x=>{
+
+if(
+x.getBoundingClientRect().top
+<
+window.innerHeight-100
+){
+
+x.style.opacity="1";
+x.style.transform="translateY(0)";
+
+}
+
+});
+
+
+}
+
+
+window.addEventListener("scroll",show);
+
+show();
+
+
+
+// افکت حرکت با موس
+
+document.addEventListener(
+"mousemove",
+e=>{
+
+
+document.body.style.backgroundPosition =
+(e.clientX/20)+"px "+(e.clientY/20)+"px";
+
+
+});
+
+
+
+</script>
 
 </script>
 </body>
