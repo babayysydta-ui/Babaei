@@ -739,6 +739,80 @@ document.body.style.backgroundPosition =
 
 </script>
 
+
+
+
+// شمارنده آمار فعالیت
+
+let started = false;
+
+function startCounter(){
+
+const stats = document.querySelector(".stats");
+
+if(!stats) return;
+
+
+const position =
+stats.getBoundingClientRect().top;
+
+
+if(position < window.innerHeight - 100 && !started){
+
+started = true;
+
+
+document.querySelectorAll(".num").forEach(num=>{
+
+
+let target = +num.dataset.target;
+
+let current = 0;
+
+let speed = target / 100;
+
+
+let counter = setInterval(()=>{
+
+
+current += speed;
+
+
+if(current >= target){
+
+current = target;
+clearInterval(counter);
+
+}
+
+
+num.innerText = Math.floor(current);
+
+
+
+},20);
+
+
+
+});
+
+
+}
+
+
+
+}
+
+
+window.addEventListener(
+"scroll",
+startCounter
+);
+
+
+startCounter();
+
+   
 </script>
 </body>
 </html>
