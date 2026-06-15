@@ -61,6 +61,104 @@ footer{text-align:center;padding:25px;background:#000;border-top:1px solid #222}
 nav{display:none;position:absolute;top:70px;right:0;width:100%;background:#111;flex-direction:column;padding:20px;text-align:center}
 nav.show{display:flex}
 }
+
+
+
+
+/* ===== Upgrade ===== */
+
+.reveal{
+opacity:0;
+transform:translateY(60px);
+transition:.8s cubic-bezier(.2,.8,.2,1);
+}
+
+.reveal.show{
+opacity:1;
+transform:translateY(0);
+}
+
+
+.btn{
+position:relative;
+overflow:hidden;
+transition:.3s;
+}
+
+.btn:hover{
+transform:translateY(-5px);
+box-shadow:0 10px 30px rgba(255,215,0,.35);
+}
+
+
+.card,
+.stat,
+.contact,
+.gallery img{
+
+animation:none;
+transition:.35s;
+}
+
+
+.card:hover,
+.stat:hover{
+transform:translateY(-12px);
+box-shadow:
+0 0 35px rgba(255,215,0,.25);
+}
+
+
+
+header{
+transition:.3s;
+}
+
+
+header.scrolled{
+background:rgba(0,0,0,.85);
+box-shadow:0 5px 30px #000;
+}
+
+
+.hero h1{
+animation:title .8s ease;
+}
+
+
+@keyframes title{
+
+from{
+opacity:0;
+transform:scale(.8);
+}
+
+to{
+opacity:1;
+transform:scale(1);
+}
+
+}
+
+
+
+.float{
+transition:.3s;
+}
+
+.float:hover{
+transform:scale(1.15);
+}
+
+
+
+.gallery img:hover{
+filter:brightness(1.15);
+}
+
+
+
+  
 </style>
 </head>
 <body>
@@ -137,18 +235,158 @@ nav.show{display:flex}
 </div>
 
 <script>
-function toggleMenu(){document.getElementById('nav').classList.toggle('show')}
-function openImg(src){document.getElementById('lightbox').style.display='flex';document.getElementById('lightimg').src=src}
 
-document.querySelectorAll('.num').forEach(el=>{
-let target=+el.dataset.target,count=0;
-let step=Math.max(1,Math.ceil(target/80));
-let timer=setInterval(()=>{
-count+=step;
-if(count>=target){count=target;clearInterval(timer)}
-el.innerText=count;
-},20);
+
+
+function toggleMenu(){
+document.getElementById('nav')
+.classList.toggle('show')
+}
+
+
+
+
+function openImg(src){
+
+let box=document.getElementById('lightbox');
+
+box.style.display='flex';
+
+document.getElementById('lightimg').src=src;
+
+}
+
+
+
+
+// انیمیشن اسکرول
+
+const items=document.querySelectorAll(
+".card,.stat,.contact,.gallery img,.title"
+);
+
+
+items.forEach(i=>{
+i.classList.add("reveal");
 });
+
+
+
+function reveal(){
+
+items.forEach(item=>{
+
+let top=item.getBoundingClientRect().top;
+
+
+if(top < window.innerHeight-100){
+
+item.classList.add("show");
+
+}
+
+});
+
+}
+
+
+window.addEventListener("scroll",()=>{
+
+
+reveal();
+
+
+
+if(window.scrollY>50){
+
+document.querySelector("header")
+.classList.add("scrolled");
+
+}else{
+
+document.querySelector("header")
+.classList.remove("scrolled");
+
+}
+
+
+
+});
+
+reveal();
+
+
+
+
+// شمارنده فقط موقع دیده شدن
+
+let started=false;
+
+
+function counter(){
+
+
+if(started)return;
+
+
+let stats=document.querySelector(".stats");
+
+
+if(
+stats.getBoundingClientRect().top
+<
+window.innerHeight-100
+){
+
+started=true;
+
+
+document.querySelectorAll('.num')
+.forEach(el=>{
+
+
+let target=+el.dataset.target;
+
+let count=0;
+
+let timer=setInterval(()=>{
+
+
+count+=Math.ceil(target/60);
+
+
+if(count>=target){
+
+count=target;
+
+clearInterval(timer);
+
+}
+
+
+el.innerText=count;
+
+
+},25);
+
+
+});
+
+
+}
+
+
+
+}
+
+
+window.addEventListener("scroll",counter);
+
+counter();
+
+
+
+
 </script>
 </body>
 </html>
